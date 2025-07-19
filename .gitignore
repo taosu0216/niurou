@@ -6,7 +6,7 @@
 *.exe~
 *.dll
 *.so
-*.dylib
+#*.dylib
 
 # Test binary, built with `go test -c`
 *.test
@@ -30,3 +30,8 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+qdrant_storage/
+.DS_Store
+.git
+.gitignore
+neo4j_data/
