@@ -4,9 +4,9 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-20T04:17:39.321Z",
-    "updatedAt": "2025-07-20T04:17:39.323Z",
-    "resourceCount": 3
+    "createdAt": "2025-07-20T15:04:14.998Z",
+    "updatedAt": "2025-07-20T15:04:15.004Z",
+    "resourceCount": 6
   },
   "resources": [
     {
@@ -17,9 +17,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/local-agent-architect/execution/local-agent-development.execution.md",
       "metadata": {
-        "createdAt": "2025-07-20T04:17:39.322Z",
-        "updatedAt": "2025-07-20T04:17:39.322Z",
-        "scannedAt": "2025-07-20T04:17:39.322Z",
+        "createdAt": "2025-07-20T15:04:14.999Z",
+        "updatedAt": "2025-07-20T15:04:14.999Z",
+        "scannedAt": "2025-07-20T15:04:14.999Z",
         "path": "role/local-agent-architect/execution/local-agent-development.execution.md"
       }
     },
@@ -31,9 +31,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/local-agent-architect/local-agent-architect.role.md",
       "metadata": {
-        "createdAt": "2025-07-20T04:17:39.322Z",
-        "updatedAt": "2025-07-20T04:17:39.322Z",
-        "scannedAt": "2025-07-20T04:17:39.322Z",
+        "createdAt": "2025-07-20T15:04:14.999Z",
+        "updatedAt": "2025-07-20T15:04:14.999Z",
+        "scannedAt": "2025-07-20T15:04:14.999Z",
         "path": "role/local-agent-architect/local-agent-architect.role.md"
       }
     },
@@ -45,22 +45,64 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/local-agent-architect/thought/system-architecture-thinking.thought.md",
       "metadata": {
-        "createdAt": "2025-07-20T04:17:39.323Z",
-        "updatedAt": "2025-07-20T04:17:39.323Z",
-        "scannedAt": "2025-07-20T04:17:39.323Z",
+        "createdAt": "2025-07-20T15:04:14.999Z",
+        "updatedAt": "2025-07-20T15:04:14.999Z",
+        "scannedAt": "2025-07-20T15:04:14.999Z",
         "path": "role/local-agent-architect/thought/system-architecture-thinking.thought.md"
+      }
+    },
+    {
+      "id": "tauri-macos-workflow",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Tauri Macos Workflow 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/tauri-macos-engineer/execution/tauri-macos-workflow.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-20T15:04:14.999Z",
+        "updatedAt": "2025-07-20T15:04:14.999Z",
+        "scannedAt": "2025-07-20T15:04:14.999Z",
+        "path": "role/tauri-macos-engineer/execution/tauri-macos-workflow.execution.md"
+      }
+    },
+    {
+      "id": "tauri-macos-engineer",
+      "source": "project",
+      "protocol": "role",
+      "name": "Tauri Macos Engineer 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/tauri-macos-engineer/tauri-macos-engineer.role.md",
+      "metadata": {
+        "createdAt": "2025-07-20T15:04:15.004Z",
+        "updatedAt": "2025-07-20T15:04:15.004Z",
+        "scannedAt": "2025-07-20T15:04:15.004Z",
+        "path": "role/tauri-macos-engineer/tauri-macos-engineer.role.md"
+      }
+    },
+    {
+      "id": "tauri-development",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Tauri Development 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/tauri-macos-engineer/thought/tauri-development.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-20T15:04:15.004Z",
+        "updatedAt": "2025-07-20T15:04:15.004Z",
+        "scannedAt": "2025-07-20T15:04:15.004Z",
+        "path": "role/tauri-macos-engineer/thought/tauri-development.thought.md"
       }
     }
   ],
   "stats": {
-    "totalResources": 3,
+    "totalResources": 6,
     "byProtocol": {
-      "execution": 1,
-      "role": 1,
-      "thought": 1
+      "execution": 2,
+      "role": 2,
+      "thought": 2
     },
     "bySource": {
-      "project": 3
+      "project": 6
     }
   }
 }
