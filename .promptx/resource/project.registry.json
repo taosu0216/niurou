@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "source": "project",
+  "metadata": {
+    "version": "2.0.0",
+    "description": "project 级资源注册表",
+    "createdAt": "2025-07-20T04:17:39.321Z",
+    "updatedAt": "2025-07-20T04:17:39.323Z",
+    "resourceCount": 3
+  },
+  "resources": [
+    {
+      "id": "local-agent-development",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Local Agent Development 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/role/local-agent-architect/execution/local-agent-development.execution.md",
+      "metadata": {
+        "createdAt": "2025-07-20T04:17:39.322Z",
+        "updatedAt": "2025-07-20T04:17:39.322Z",
+        "scannedAt": "2025-07-20T04:17:39.322Z",
+        "path": "role/local-agent-architect/execution/local-agent-development.execution.md"
+      }
+    },
+    {
+      "id": "local-agent-architect",
+      "source": "project",
+      "protocol": "role",
+      "name": "Local Agent Architect 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/local-agent-architect/local-agent-architect.role.md",
+      "metadata": {
+        "createdAt": "2025-07-20T04:17:39.322Z",
+        "updatedAt": "2025-07-20T04:17:39.322Z",
+        "scannedAt": "2025-07-20T04:17:39.322Z",
+        "path": "role/local-agent-architect/local-agent-architect.role.md"
+      }
+    },
+    {
+      "id": "system-architecture-thinking",
+      "source": "project",
+      "protocol": "thought",
+      "name": "System Architecture Thinking 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/local-agent-architect/thought/system-architecture-thinking.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-20T04:17:39.323Z",
+        "updatedAt": "2025-07-20T04:17:39.323Z",
+        "scannedAt": "2025-07-20T04:17:39.323Z",
+        "path": "role/local-agent-architect/thought/system-architecture-thinking.thought.md"
+      }
+    }
+  ],
+  "stats": {
+    "totalResources": 3,
+    "byProtocol": {
+      "execution": 1,
+      "role": 1,
+      "thought": 1
+    },
+    "bySource": {
+      "project": 3
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "currentState": "role_activated_with_memory",
+  "stateHistory": [
+    {
+      "from": "initial",
+      "command": "init",
+      "timestamp": "2025-07-20T04:14:13.338Z",
+      "args": [
+        {
+          "workingDirectory": "/Users/taosu/Desktop/workspace/tmp/niurou",
+          "ideType": "cursor"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "action",
+      "timestamp": "2025-07-20T04:14:16.547Z",
+      "args": [
+        "nuwa"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "action",
+      "timestamp": "2025-07-20T04:17:35.326Z",
+      "args": [
+        "local-agent-architect"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-07-20T04:17:39.318Z",
+      "args": [
+        {
+          "workingDirectory": "/Users/taosu/Desktop/workspace/tmp/niurou",
+          "ideType": "cursor"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "action",
+      "timestamp": "2025-07-20T04:17:43.326Z",
+      "args": [
+        "local-agent-architect"
+      ]
+    }
+  ],
+  "lastUpdated": "2025-07-20T04:17:43.339Z"
+}

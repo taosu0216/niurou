@@ -35,4 +35,4 @@ qdrant_storage/
 .git
 .gitignore
 neo4j_data/
-internal/vecX/mpent_onnx/
+internal/vecX/mpnet_onnx/
