@@ -44,9 +44,9 @@ func runApplication(ctx context.Context, shutdownManager *graceful.ShutdownManag
 	httpServer := server.New(chatService, 8080)
 
 	// 3. 注册优雅退出函数
-	shutdownManager.RegisterShutdownFunc(graceful.LogShutdownFunc("对话记忆保存", func(ctx context.Context) error {
-		return chatService.SaveConversationToMemory(ctx)
-	}))
+	// shutdownManager.RegisterShutdownFunc(graceful.LogShutdownFunc("对话记忆保存", func(ctx context.Context) error {
+	// 	return chatService.SaveConversationToMemory(ctx)
+	// }))
 
 	shutdownManager.RegisterShutdownFunc(graceful.LogShutdownFunc("HTTP服务器", func(ctx context.Context) error {
 		return httpServer.Shutdown(ctx)

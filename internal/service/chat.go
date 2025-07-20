@@ -8,14 +8,15 @@ import (
 	"sync"
 	"time"
 
-	"niurou/internal/agent"
-	"niurou/internal/memManager"
-	"niurou/internal/tools"
+	"niurou/internal/app/agent"
+	"niurou/internal/app/agent/agents"
+	"niurou/internal/app/tools"
+	"niurou/internal/data/memManager"
 )
 
 // ChatService 聊天服务
 type ChatService struct {
-	agent           *agent.Agent
+	agent           *agents.Agent
 	memManager      memManager.Manager
 	conversationLog []ConversationEntry
 	mu              sync.RWMutex
@@ -46,10 +47,7 @@ func New(ctx context.Context) (*ChatService, error) {
 	log.Println("🤖 正在初始化聊天服务...")
 
 	// 初始化Agent
-	agentInstance, err := agent.New(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("初始化Agent失败: %w", err)
-	}
+	agentInstance := agents.GetNiurouAgent()
 
 	// 复用Agent的MemManager，避免重复初始化ONNX Runtime
 	memManagerInstance := agentInstance.GetMemManager()
@@ -95,38 +93,18 @@ func (s *ChatService) Chat(ctx context.Context, userInput string) (string, error
 	return reply, nil
 }
 
-// Learn 处理学习请求
-func (s *ChatService) Learn(ctx context.Context, content string) error {
-	log.Printf("📚 开始学习内容: %s", content)
+// // Learn 处理学习请求
+// func (s *ChatService) Learn(ctx context.Context, content string) error {
+// 	log.Printf("📚 开始学习内容: %s", content)
 
-	_, err := s.agent.IngestAndLearn(ctx, content)
-	if err != nil {
-		return fmt.Errorf("学习内容失败: %w", err)
-	}
+// 	_, err := s.agent.IngestAndLearn(ctx, content)
+// 	if err != nil {
+// 		return fmt.Errorf("学习内容失败: %w", err)
+// 	}
 
-	log.Println("✅ 内容学习完成")
-	return nil
-}
-
-// GetStatus 获取服务状态
-func (s *ChatService) GetStatus() ServiceStatus {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	var lastActivity time.Time
-	if len(s.conversationLog) > 0 {
-		lastActivity = s.conversationLog[len(s.conversationLog)-1].Timestamp
-	}
-
-	return ServiceStatus{
-		Status:           "running",
-		StartTime:        s.startTime,
-		Uptime:           time.Since(s.startTime).String(),
-		MessageCount:     s.messageCount,
-		ConversationSize: len(s.conversationLog),
-		LastActivity:     lastActivity,
-	}
-}
+// 	log.Println("✅ 内容学习完成")
+// 	return nil
+// }
 
 // GetConversationLog 获取对话记录
 func (s *ChatService) GetConversationLog() []ConversationEntry {
@@ -139,43 +117,43 @@ func (s *ChatService) GetConversationLog() []ConversationEntry {
 	return log
 }
 
-// SaveConversationToMemory 将对话记录保存到记忆库
-// 使用智能记忆回收Agent进行价值判断和选择性保存
-func (s *ChatService) SaveConversationToMemory(ctx context.Context) error {
-	s.mu.RLock()
-	conversationLog := s.GetConversationLog()
-	s.mu.RUnlock()
+// // SaveConversationToMemory 将对话记录保存到记忆库
+// // 使用智能记忆回收Agent进行价值判断和选择性保存
+// func (s *ChatService) SaveConversationToMemory(ctx context.Context) error {
+// 	s.mu.RLock()
+// 	conversationLog := s.GetConversationLog()
+// 	s.mu.RUnlock()
 
-	if len(conversationLog) == 0 {
-		log.Println("📝 没有对话记录需要保存")
-		return nil
-	}
+// 	if len(conversationLog) == 0 {
+// 		log.Println("📝 没有对话记录需要保存")
+// 		return nil
+// 	}
 
-	log.Printf("🧠 启动智能记忆回收，分析 %d 条对话记录...", len(conversationLog))
+// 	log.Printf("🧠 启动智能记忆回收，分析 %d 条对话记录...", len(conversationLog))
 
-	// 1. 创建记忆回收Agent
-	memoryAgent, err := agent.NewMemoryRecoveryAgent(ctx)
-	if err != nil {
-		log.Printf("⚠️ 记忆回收Agent创建失败，回退到传统保存方式: %v", err)
-		return s.fallbackSaveConversation(ctx, conversationLog)
-	}
-	defer memoryAgent.Close()
+// 	// 1. 创建记忆回收Agent
+// 	memoryAgent, err := agent.NewMemoryRecoveryAgent(ctx)
+// 	if err != nil {
+// 		log.Printf("⚠️ 记忆回收Agent创建失败，回退到传统保存方式: %v", err)
+// 		return s.fallbackSaveConversation(ctx, conversationLog)
+// 	}
+// 	defer memoryAgent.Close()
 
-	// 2. 转换对话格式（从service.ConversationEntry到tools.ConversationEntry）
-	toolsConversations := s.convertConversationEntries(conversationLog)
+// 	// 2. 转换对话格式（从service.ConversationEntry到tools.ConversationEntry）
+// 	toolsConversations := s.convertConversationEntries(conversationLog)
 
-	// 3. 使用记忆回收Agent处理对话
-	report, err := memoryAgent.ProcessConversationMemory(ctx, toolsConversations)
-	if err != nil {
-		log.Printf("⚠️ 智能记忆回收失败，回退到传统保存方式: %v", err)
-		return s.fallbackSaveConversation(ctx, conversationLog)
-	}
+// 	// 3. 使用记忆回收Agent处理对话
+// 	report, err := memoryAgent.ProcessConversationMemory(ctx, toolsConversations)
+// 	if err != nil {
+// 		log.Printf("⚠️ 智能记忆回收失败，回退到传统保存方式: %v", err)
+// 		return s.fallbackSaveConversation(ctx, conversationLog)
+// 	}
 
-	// 4. 输出处理报告
-	s.logMemoryRecoveryReport(report)
+// 	// 4. 输出处理报告
+// 	s.logMemoryRecoveryReport(report)
 
-	return nil
-}
+// 	return nil
+// }
 
 // convertConversationEntries 转换对话记录格式
 func (s *ChatService) convertConversationEntries(conversations []ConversationEntry) []tools.ConversationEntry {
@@ -191,22 +169,22 @@ func (s *ChatService) convertConversationEntries(conversations []ConversationEnt
 	return toolsConversations
 }
 
-// fallbackSaveConversation 传统的对话保存方式（作为备用方案）
-func (s *ChatService) fallbackSaveConversation(ctx context.Context, conversationLog []ConversationEntry) error {
-	log.Println("📝 使用传统方式保存对话记录...")
+// // fallbackSaveConversation 传统的对话保存方式（作为备用方案）
+// func (s *ChatService) fallbackSaveConversation(ctx context.Context, conversationLog []ConversationEntry) error {
+// 	log.Println("📝 使用传统方式保存对话记录...")
 
-	// 构建对话摘要
-	summary := s.buildConversationSummary(conversationLog)
+// 	// 构建对话摘要
+// 	summary := s.buildConversationSummary(conversationLog)
 
-	// 保存到记忆库
-	_, err := s.agent.IngestAndLearn(ctx, summary)
-	if err != nil {
-		return fmt.Errorf("保存对话记录失败: %w", err)
-	}
+// 	// 保存到记忆库
+// 	_, err := s.agent.IngestAndLearn(ctx, summary)
+// 	if err != nil {
+// 		return fmt.Errorf("保存对话记录失败: %w", err)
+// 	}
 
-	log.Println("✅ 对话记录已保存到记忆库（传统方式）")
-	return nil
-}
+// 	log.Println("✅ 对话记录已保存到记忆库（传统方式）")
+// 	return nil
+// }
 
 // logMemoryRecoveryReport 输出记忆回收处理报告
 func (s *ChatService) logMemoryRecoveryReport(report *agent.MemoryRecoveryReport) {
